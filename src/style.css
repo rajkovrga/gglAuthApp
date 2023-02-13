@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#g_a11y_announcement {
+    display: none !important;
+}

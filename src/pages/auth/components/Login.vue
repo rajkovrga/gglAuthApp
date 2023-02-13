@@ -1,12 +1,25 @@
 <script setup lang="ts">
-import jwt from 'jsonwebtoken';
-
+import {useAuthStore} from "@/stores/auth";
+import type {GoogleTokenData} from "@/models";
+import jwtDecode from "jwt-decode";
+import router from "@/router";
+import {onMounted} from "vue";
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+const {setStore} = useAuthStore();
 
-window.handleLogin = (response: any) => {
-  console.log(jwt.decode(response.credential))
+window.handleLogin = async (response: any) => {
+  const data = jwtDecode(response.credential) as GoogleTokenData|null;
+
+  if(data !== null) {
+    setStore(response.credential.toString(), {
+      email: data.email,
+      username: data.name,
+      imageUrl: data.picture
+    });
+
+    await router.push({ name: 'todo' })
+  }
 }
-
 </script>
 
 <template>
@@ -15,6 +28,7 @@ window.handleLogin = (response: any) => {
          :data-client_id="clientId"
          data-context="signin"
          data-ux_mode="popup"
+         data-nonce=""
          data-callback="handleLogin"
          data-auto_prompt="false">
     </div>

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Auth from "@/pages/auth/Auth.vue";
 import Todo from "@/pages/todo/Todo.vue";
 import authMiddleware from "@/router/middlewares/auth";
+import noAuthMiddleware from "@/router/middlewares/noauth";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,9 +11,7 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: Auth,
-      meta: {
-          title: "peraaa"
-      }
+      beforeEnter: noAuthMiddleware
     },
     {
       path: '/',
@@ -21,15 +20,7 @@ const router = createRouter({
       beforeEnter: authMiddleware
     }
   ],
-})
-
-router.beforeEach((to, from, next) => {
-  var metaGoogle = document.createElement('meta');
-
-  metaGoogle.content = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-
-  document.head.appendChild(metaGoogle);
-
-  next();
 });
+
+
 export default router;

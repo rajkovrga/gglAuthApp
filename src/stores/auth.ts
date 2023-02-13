@@ -1,30 +1,32 @@
 import {defineStore} from "pinia";
-import type {UserData} from "@/models";
-import jwt from "jsonwebtoken";
+import type {GoogleTokenData, UserData} from "@/models";
+import jwtDecode from "jwt-decode";
+import {DateTime} from "luxon";
+import router from "@/router";
 
 export const useAuthStore = defineStore('auth',  {
-    state: () => ({token: '', user: {}}),
+    state(){
+        return {token: '' as string, user: {} as UserData}
+    },
     getters: {
-        getUserData: (state) => state.user,
-        isAuth: (state) => {
-            if(state.token === '')
-                return false;
-            else if(jwt.verify(state.token, ''))
-                return true;
-
-
-            return false;
-        }
+        getState: state => state
     },
     actions: {
         setStore(token: string, userData: UserData) {
+            localStorage.setItem('token', JSON.stringify({
+                token: token,
+                userData: userData
+            }));
             this.token = token;
             this.user = userData;
         },
-
-        resetStore() {
+        removeStore() {
             this.token = '';
-            this.user = {};
+            this.user = {} as UserData;
+            localStorage.removeItem('token');
+            router.push('/login');
         }
-    }
+    },
+
+
 });

@@ -18,6 +18,7 @@
     "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^3.1.2",
     "pinia": "^2.0.28",
+    "three": "^0.149.0",
     "vue": "^3.2.36",
     "vue-meta": "^2.4.0",
     "vue-router": "^4.1.6",

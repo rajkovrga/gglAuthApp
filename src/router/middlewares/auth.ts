@@ -2,7 +2,7 @@ import {useAuthStore} from "@/stores/auth";
 import type {NavigationGuard} from "vue-router";
 import jwtDecode from "jwt-decode";
 import {DateTime} from "luxon";
-import type {GoogleTokenData, UserData} from "@/models";
+import type {GoogleTokenData} from "@/models";
 
 const authMiddleware: NavigationGuard = (_to, from, next) => {
     const { getState, setStore, removeStore } = useAuthStore();

@@ -1,7 +1,5 @@
 import {defineStore} from "pinia";
 import type {GoogleTokenData, UserData} from "@/models";
-import jwtDecode from "jwt-decode";
-import {DateTime} from "luxon";
 import router from "@/router";
 
 export const useAuthStore = defineStore('auth',  {

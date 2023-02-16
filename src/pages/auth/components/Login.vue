@@ -3,8 +3,8 @@ import {useAuthStore} from "@/stores/auth";
 import type {GoogleTokenData} from "@/models";
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import {onMounted} from "vue";
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
 const {setStore} = useAuthStore();
 
 window.handleLogin = async (response: any) => {

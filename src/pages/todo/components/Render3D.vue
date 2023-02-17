@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import {onMounted} from "vue";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-let obj;
+import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 onMounted(() => {
   const renderWindow = document.getElementById("render");
@@ -16,19 +16,24 @@ onMounted(() => {
 
   const renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, 450)
+
+  const controls = new OrbitControls(camera, renderWindow);
+  controls.addEventListener("change", renderer);
+
   renderWindow.append(renderer.domElement);
   const loader = new GLTFLoader();
   loader.load(`${window.location.href}models/car/scene.gltf`, function (gltf) {
-      obj = gltf.scene;
     scene.add(gltf.scene);
   });
   scene.background = new THREE.Color(0xffffff);
+
+
+
   const light = new THREE.HemisphereLight(0xffffff, 0x000000,2);
   scene.add(light);
   camera.position.set(0,100,400);
   function animate() {
      requestAnimationFrame(animate);
-     obj.rotation.y += 0.02;
      renderer.render(scene,camera);
   }
   animate();
